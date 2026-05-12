@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tareas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .tarea-item { padding: 10px; border: 1px solid #ccc; margin: 8px 0; border-radius: 4px; }
+        .completada { text-decoration: line-through; color: #888; }
+        #btn-nueva {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        #form-nueva { margin-top: 20px; display: none; }
+        #form-nueva input {
+            padding: 8px;
+            width: 300px;
+            margin-right: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #form-nueva button {
+            padding: 8px 16px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Gestión de Tareas</h1>
+
+<button id="btn-nueva" onclick="document.getElementById('form-nueva').style.display='block'">
+    Nueva Tarea
+</button>
+
+<div id="form-nueva">
+    <input type="text" id="input-titulo" placeholder="Título de la tarea" />
+    <input type="text" id="input-descripcion" placeholder="Descripción (opcional)" />
+    <button id="btn-guardar" onclick="crearTarea()">Guardar</button>
+</div>
+
+<h2>Lista de Tareas</h2>
+
+<div id="lista-tareas">
+    <div th:each="tarea : ${tareas}"
+         class="tarea-item"
+         th:classappend="${tarea.completada} ? 'completada' : ''">
+        <span th:text="${tarea.titulo}">Título</span>
+        <small th:text="${tarea.completada} ? ' ✔ Completada' : ' ⏳ Pendiente'"></small>
+    </div>
+</div>
+
+<script>
+    function crearTarea() {
+        const titulo = document.getElementById('input-titulo').value;
+        const descripcion = document.getElementById('input-descripcion').value;
+        fetch('/api/tareas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ titulo: titulo, descripcion: descripcion })
+        }).then(r => r.json()).then(() => location.reload());
+    }
+</script>
+
+</body>
+</html>
