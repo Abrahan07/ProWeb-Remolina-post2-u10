@@ -1,0 +1,249 @@
+{
+  "info": {
+    "_postman_id": "7e376d63-9701-49e4-a862-be779876a5d0",
+    "name": "API ToDoApp",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54146042",
+    "_collection_link": "https://go.postman.co/collection/54146042-7e376d63-9701-49e4-a862-be779876a5d0?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "POST crear tarea",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 201 Created\", () => {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "pm.test(\"Respuesta contiene id numerico\", () => {\r",
+              "    const b = pm.response.json();\r",
+              "    pm.expect(b).to.have.property(\"id\");\r",
+              "    pm.collectionVariables.set(\"tareaId\", b.id);\r",
+              "});\r",
+              "pm.test(\"Tiempo de respuesta menor a 500ms\", () => {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"titulo\": \"Tarea desde Postman\",\r\n    \"descripcion\": \"Prueba de integracion\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/tareas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tareas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET obtener tarea",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200 OK\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Titulo es correcto\", () => {\r",
+              "    const b = pm.response.json();\r",
+              "    pm.expect(b.titulo).to.eql(\"Tarea desde Postman\");\r",
+              "});\r",
+              "pm.test(\"Tiempo de respuesta menor a 500ms\", () => {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/tareas/{{tareaId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tareas",
+            "{{tareaId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH completar tarea",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200 OK\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Tarea marcada como completada\", () => {\r",
+              "    const b = pm.response.json();\r",
+              "    pm.expect(b.completada).to.eql(true);\r",
+              "});\r",
+              "pm.test(\"Tiempo de respuesta menor a 500ms\", () => {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/tareas/{{tareaId}}/completar",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tareas",
+            "{{tareaId}}",
+            "completar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET verificar completada",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200 OK\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Tarea sigue completada\", () => {\r",
+              "    const b = pm.response.json();\r",
+              "    pm.expect(b.completada).to.eql(true);\r",
+              "});\r",
+              "pm.test(\"Tiempo de respuesta menor a 500ms\", () => {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/tareas/{{tareaId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tareas",
+            "{{tareaId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET tarea inexistente 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 404 Not Found\", () => {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "pm.test(\"Tiempo de respuesta menor a 500ms\", () => {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/tareas/99999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tareas",
+            "99999"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "tareaId",
+      "value": ""
+    }
+  ]
+}

@@ -27,7 +27,7 @@ public class TareaController {
 
     @PostMapping
     public ResponseEntity<Tarea> crear(@RequestBody Tarea tarea) {
-        return ResponseEntity.ok(service.crear(tarea));
+        return ResponseEntity.status(201).body(service.crear(tarea));
     }
 
     @PatchMapping("/{id}/completar")

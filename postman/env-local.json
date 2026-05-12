@@ -1,0 +1,16 @@
+{
+	"id": "fee980f2-b59f-49f6-944f-0a60a9f587f1",
+	"name": "ToDoApp-Local",
+	"values": [
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-05-12T04:46:32.284Z",
+	"_postman_exported_using": "Postman/12.7.2"
+}
